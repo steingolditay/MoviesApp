@@ -13,10 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SharedViewModel
+@Inject constructor(private val repository: Repository) : ViewModel() {
 
-@Inject constructor(private val repository: Repository): ViewModel(){
-
-    
     private val _configurations = MutableLiveData<ConfigurationsJsonResponse?>()
     val configurations: LiveData<ConfigurationsJsonResponse?> = _configurations
 
@@ -30,13 +28,13 @@ class SharedViewModel
     val favorites: LiveData<HashMap<String, Movie>?> = _favorites
 
 
-    fun getConfigurations(){
-        viewModelScope.launch(Dispatchers.IO){
+    fun getConfigurations() {
+        viewModelScope.launch(Dispatchers.IO) {
             _configurations.postValue(repository.getConfigurations())
         }
     }
 
-    fun getPopularMovies(pageNumber: String){
+    fun getPopularMovies(pageNumber: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val existingValue = _popularMovies.value
             val updatedValue = repository.getPopularMovies(pageNumber)
@@ -44,28 +42,31 @@ class SharedViewModel
             if (existingValue != null && updatedValue != null) {
                 val mergedResult = existingValue.results + updatedValue.results
                 _popularMovies.postValue(MoviesJsonResponse(mergedResult, existingValue.total_pages))
-            }
-            else {
+            } else if (existingValue == null && updatedValue != null) {
                 _popularMovies.postValue(updatedValue)
+            } else {
+                _popularMovies.postValue(existingValue)
             }
         }
     }
 
-    fun getMoviesInTheaters(pageNumber: String){
-        viewModelScope.launch(Dispatchers.IO){
+    fun getMoviesInTheaters(pageNumber: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             val existingValue = _moviesInTheaters.value
             val updatedValue = repository.getMoviesInTheaters(pageNumber)
-            if (existingValue != null && updatedValue != null){
+            if (existingValue != null && updatedValue != null) {
                 val mergedResult = existingValue.results + updatedValue.results
                 _moviesInTheaters.postValue(MoviesJsonResponse(mergedResult, existingValue.total_pages))
-            }
-            else {
+            } else if (existingValue == null && updatedValue != null) {
                 _moviesInTheaters.postValue(updatedValue)
+            } else {
+                _moviesInTheaters.postValue(existingValue)
+
             }
         }
     }
 
-    fun getFavorites(){
+    fun getFavorites() {
         val structure = MapStructure.create(HashMap::class.java, String::class.java, Movie::class.java)
         val favorites: HashMap<String, Movie>? = PowerPreference.getDefaultFile().getMap(Constants.favorites, structure)
         _favorites.postValue(favorites)

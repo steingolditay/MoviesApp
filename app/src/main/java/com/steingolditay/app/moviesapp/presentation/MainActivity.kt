@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: SharedViewModel
@@ -31,7 +31,8 @@ class MainActivity: AppCompatActivity() {
     private var isConnected = false
     private var dataLoaded = false
 
-    @Inject lateinit var networkConnectionMonitor: NetworkConnectionMonitor
+    @Inject
+    lateinit var networkConnectionMonitor: NetworkConnectionMonitor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,28 +47,27 @@ class MainActivity: AppCompatActivity() {
 
     }
 
-    private fun initNetworkConnectionMonitor(){
+    private fun initNetworkConnectionMonitor() {
         networkConnectionMonitor.registerNetworkCallback()
         networkConnectionMonitor.liveData.observe(this, {
             isConnected = it
-            if (isConnected && !dataLoaded){
+            if (isConnected && !dataLoaded) {
                 initViewModel()
             }
         })
     }
 
-    private fun initViewModel(){
+    private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
         viewModel.getConfigurations()
 
         viewModel.configurations.observe(this, { result ->
-            if (result != null){
+            if (result != null) {
                 Constants.imageBaseUrl = "${result.images.secure_base_url}w500"
                 hideProgressBar()
                 dataLoaded = true
                 setFragment(fragmentPopular)
-            }
-            else {
+            } else {
                 toastConnectionError()
             }
         })
@@ -75,8 +75,8 @@ class MainActivity: AppCompatActivity() {
 
     }
 
-    private fun initNavigationBar(){
-        binding.navigation.setOnNavigationItemSelectedListener{ item ->
+    private fun initNavigationBar() {
+        binding.navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
 
                 R.id.popular -> setFragment(fragmentPopular)
@@ -89,19 +89,23 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
-    private fun setFragment(fragment: Fragment){
+    private fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
-                replace(R.id.fragmentsContainer, fragment)
-                commit()
+            replace(R.id.fragmentsContainer, fragment)
+            commit()
         }
     }
 
-    private fun showProgressBar(){binding.progressBar.visibility = View.VISIBLE}
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
 
-    private fun hideProgressBar(){binding.progressBar.visibility = View.GONE}
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+    }
 
-    private fun toastConnectionError(){
-        val msg = if(isConnected) getString(R.string.connectionError) else getString(R.string.notConnected)
+    private fun toastConnectionError() {
+        val msg = if (isConnected) getString(R.string.connectionError) else getString(R.string.notConnected)
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 

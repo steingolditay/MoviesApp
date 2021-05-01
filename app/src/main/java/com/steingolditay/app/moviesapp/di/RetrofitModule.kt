@@ -18,11 +18,10 @@ object RetrofitModule {
     @Provides
     fun providesRetrofit(): RetrofitInterface {
         return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(Constants.apiBaseUrl)
-            .build()
-            .create(RetrofitInterface::class.java)
-
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(Constants.apiBaseUrl)
+                .build()
+                .create(RetrofitInterface::class.java)
     }
 
 }

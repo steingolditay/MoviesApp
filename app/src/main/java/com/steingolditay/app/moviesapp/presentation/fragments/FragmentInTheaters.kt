@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.steingolditay.app.moviesapp.R
 import com.steingolditay.app.moviesapp.databinding.FragmentSharedViewBinding
 import com.steingolditay.app.moviesapp.models.Movie
 import com.steingolditay.app.moviesapp.presentation.MovieActivity
@@ -19,7 +21,7 @@ import com.steingolditay.app.moviesapp.viewmodels.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentInTheaters: Fragment(), MoviesAdapter.OnItemClickListener {
+class FragmentInTheaters : Fragment(), MoviesAdapter.OnItemClickListener {
 
     private var _binding: FragmentSharedViewBinding? = null
     private val binding get() = _binding!!
@@ -54,25 +56,31 @@ class FragmentInTheaters: Fragment(), MoviesAdapter.OnItemClickListener {
 
     }
 
-    private fun initViewModel(){
+    private fun initViewModel() {
         viewModel.moviesInTheaters.observe(viewLifecycleOwner, { result ->
             hideProgressBar()
-            if (result != null){
-                movieList = ArrayList(result.results)
-                totalPages = result.total_pages
-                updateMoviesAdapter()
+            if (result != null) {
+                if (movieList == ArrayList(result.results)) {
+                    toastConnectionError()
+                } else {
+                    movieList = ArrayList(result.results)
+                    totalPages = result.total_pages
+                    updateMoviesAdapter()
+                }
+
+            } else {
+                toastConnectionError()
             }
         })
 
-        if (firstTime){
+        if (firstTime) {
             firstTime = false
             viewModel.getMoviesInTheaters(currentPageNumber.toString())
             currentPageNumber += 1
         }
-
     }
 
-    private fun updateMoviesAdapter(){
+    private fun updateMoviesAdapter() {
         adapter = MoviesAdapter(movieList.toList(), this)
         binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
         binding.recyclerView.adapter = adapter
@@ -80,22 +88,21 @@ class FragmentInTheaters: Fragment(), MoviesAdapter.OnItemClickListener {
         scrollDownRecyclerView()
     }
 
-    private fun addRecyclerViewScrollListener(){
-        binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+    private fun addRecyclerViewScrollListener() {
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val position = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
                 if (position + 1 == movieList.size) {
                     showSeeMoreButton()
-                }
-                else {
+                } else {
                     hideSeeMoreButton()
                 }
             }
         })
     }
 
-    private fun loadPage(){
-        if (currentPageNumber < totalPages && movieList.isNotEmpty()){
+    private fun loadPage() {
+        if (currentPageNumber < totalPages && movieList.isNotEmpty()) {
             showProgressBar()
             viewModel.getMoviesInTheaters(currentPageNumber.toString())
             currentPageNumber += 1
@@ -108,14 +115,28 @@ class FragmentInTheaters: Fragment(), MoviesAdapter.OnItemClickListener {
         startActivity(intent)
     }
 
-    private fun scrollDownRecyclerView(){binding.recyclerView.smoothScrollToPosition((currentPageNumber -2) * 20 + 8)}
+    private fun scrollDownRecyclerView() {
+        binding.recyclerView.smoothScrollToPosition((currentPageNumber - 2) * 20 + 8)
+    }
 
-    private fun showProgressBar(){binding.progressBar.visibility = View.VISIBLE}
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
 
-    private fun hideProgressBar(){binding.progressBar.visibility = View.GONE}
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+    }
 
-    private fun showSeeMoreButton(){binding.seeMore.visibility = View.VISIBLE}
+    private fun showSeeMoreButton() {
+        binding.seeMore.visibility = View.VISIBLE
+    }
 
-    private fun hideSeeMoreButton(){binding.seeMore.visibility = View.GONE}
+    private fun hideSeeMoreButton() {
+        binding.seeMore.visibility = View.GONE
+    }
+
+    private fun toastConnectionError() {
+        Toast.makeText(requireContext(), getString(R.string.connectionError), Toast.LENGTH_LONG).show()
+    }
 
 }

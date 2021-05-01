@@ -15,7 +15,7 @@ import com.steingolditay.app.moviesapp.presentation.fragments.adapters.MoviesAda
 import com.steingolditay.app.moviesapp.utils.Constants
 import com.steingolditay.app.moviesapp.viewmodels.SharedViewModel
 
-class FragmentFavorites: Fragment(), MoviesAdapter.OnItemClickListener {
+class FragmentFavorites : Fragment(), MoviesAdapter.OnItemClickListener {
 
     private var _binding: FragmentSharedViewBinding? = null
     private val binding get() = _binding!!
@@ -46,9 +46,9 @@ class FragmentFavorites: Fragment(), MoviesAdapter.OnItemClickListener {
 
     }
 
-    private fun initViewModel(){
+    private fun initViewModel() {
         viewModel.favorites.observe(viewLifecycleOwner, { favorites ->
-            if(favorites != null){
+            if (favorites != null) {
                 movieList = favorites.values.toList()
                 updateMoviesAdapter()
             }
@@ -58,12 +58,11 @@ class FragmentFavorites: Fragment(), MoviesAdapter.OnItemClickListener {
 
     }
 
-    private fun updateMoviesAdapter(){
+    private fun updateMoviesAdapter() {
         adapter = MoviesAdapter(movieList, this)
         binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
         binding.recyclerView.adapter = adapter
     }
-
 
 
     override fun onItemClick(movie: Movie) {
