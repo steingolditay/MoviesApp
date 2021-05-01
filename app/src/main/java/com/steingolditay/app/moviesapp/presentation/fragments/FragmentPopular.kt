@@ -67,13 +67,9 @@ class FragmentPopular : Fragment(), MoviesAdapter.OnItemClickListener {
         viewModel.popularMovies.observe(viewLifecycleOwner, { result ->
             hideProgressBar()
             if (result != null) {
-                if (movieList == ArrayList(result.results)) {
-                    toastConnectionError()
-                } else {
-                    movieList = ArrayList(result.results)
-                    totalPages = result.total_pages
-                    updateMoviesAdapter()
-                }
+                movieList = ArrayList(result.results)
+                totalPages = result.total_pages
+                updateMoviesAdapter()
             } else {
                 toastConnectionError()
             }

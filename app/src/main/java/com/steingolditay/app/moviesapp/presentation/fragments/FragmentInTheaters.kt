@@ -33,6 +33,7 @@ class FragmentInTheaters : Fragment(), MoviesAdapter.OnItemClickListener {
     private var movieList = ArrayList<Movie>()
 
     private var firstTime = true
+    private var resumed = false
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -60,14 +61,9 @@ class FragmentInTheaters : Fragment(), MoviesAdapter.OnItemClickListener {
         viewModel.moviesInTheaters.observe(viewLifecycleOwner, { result ->
             hideProgressBar()
             if (result != null) {
-                if (movieList == ArrayList(result.results)) {
-                    toastConnectionError()
-                } else {
-                    movieList = ArrayList(result.results)
-                    totalPages = result.total_pages
-                    updateMoviesAdapter()
-                }
-
+                movieList = ArrayList(result.results)
+                totalPages = result.total_pages
+                updateMoviesAdapter()
             } else {
                 toastConnectionError()
             }
