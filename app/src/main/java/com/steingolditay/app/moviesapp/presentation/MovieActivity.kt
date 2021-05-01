@@ -8,6 +8,7 @@ import com.squareup.picasso.Picasso
 import com.steingolditay.app.moviesapp.R
 import com.steingolditay.app.moviesapp.databinding.ActivityMovieBinding
 import com.steingolditay.app.moviesapp.models.Movie
+import com.steingolditay.app.moviesapp.models.MovieDetails
 import com.steingolditay.app.moviesapp.utils.Constants
 import com.steingolditay.app.moviesapp.viewmodels.MovieViewModel
 import com.steingolditay.app.moviesapp.viewmodels.SharedViewModel
@@ -20,7 +21,7 @@ class MovieActivity: AppCompatActivity() {
     private lateinit var viewModel: MovieViewModel
 
     private lateinit var genresMap: Map<Int, String>
-    private lateinit var movie: Movie
+    private lateinit var movie: MovieDetails
     private lateinit var movieId: String
 
 
@@ -37,19 +38,16 @@ class MovieActivity: AppCompatActivity() {
 
     private fun initViewModel(){
         viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
-        genresMap = viewModel.movieGenres.value?.genres!!.map { it.id to it.name }.toMap()
-        println(viewModel.movieGenres.value)
 
-//        viewModel.movieDetails.observe(this, { result ->
-//            hideProgressBar()
-//            if (result != null){
-//                movie = result
-//                updateUi()
-//
-//            }
-//        })
-//
-//        viewModel.getMovieDetails(movieId)
+        viewModel.movieDetails.observe(this, { result ->
+            hideProgressBar()
+            if (result != null){
+                movie = result
+                updateUi()
+            }
+        })
+
+        viewModel.getMovieDetails(movieId)
     }
 
 
@@ -67,13 +65,7 @@ class MovieActivity: AppCompatActivity() {
         binding.popularity.text = movie.popularity.toString()
         binding.releaseDate.text = movie.release_date
         binding.language.text = movie.original_language
-
-        val genres = arrayListOf<String>()
-        for (genreId in movie.genre_ids){
-            genres.add(genresMap[genreId]!!)
-        }
-        binding.genres.text = genres.joinToString()
-
+        binding.genres.text = movie.genres.joinToString { it.name }
     }
 
     private fun showProgressBar(){binding.progressBar.visibility = View.VISIBLE}

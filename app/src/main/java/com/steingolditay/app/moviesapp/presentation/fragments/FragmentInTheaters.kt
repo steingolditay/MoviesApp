@@ -1,5 +1,6 @@
 package com.steingolditay.app.moviesapp.presentation.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.steingolditay.app.moviesapp.databinding.FragmentInTheatersBinding
 import com.steingolditay.app.moviesapp.models.Movie
+import com.steingolditay.app.moviesapp.presentation.MovieActivity
 import com.steingolditay.app.moviesapp.presentation.fragments.adapters.MoviesAdapter
+import com.steingolditay.app.moviesapp.utils.Constants
 import com.steingolditay.app.moviesapp.viewmodels.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -101,7 +104,9 @@ class FragmentInTheaters: Fragment(), MoviesAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(movie: Movie) {
-        Toast.makeText(requireContext(), movie.title, Toast.LENGTH_SHORT).show()
+        val intent = Intent(requireContext(), MovieActivity::class.java)
+        intent.putExtra(Constants.movieId, movie.id.toString())
+        startActivity(intent)
     }
 
     private fun scrollDownRecyclerView(){binding.recyclerView.smoothScrollToPosition((currentPageNumber -2) * 20 + 8)}

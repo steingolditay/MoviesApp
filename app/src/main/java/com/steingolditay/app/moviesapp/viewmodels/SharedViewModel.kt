@@ -17,8 +17,7 @@ class SharedViewModel
 @Inject constructor(private val repository: Repository): ViewModel(){
 
 
-    private val _movieGenres = MutableLiveData<GenresJsonResponse?>()
-    val movieGenres: LiveData<GenresJsonResponse?> = _movieGenres
+
 
     private val _configurations = MutableLiveData<ConfigurationsJsonResponse?>()
     val configurations: LiveData<ConfigurationsJsonResponse?> = _configurations
@@ -29,15 +28,9 @@ class SharedViewModel
     private val _moviesInTheaters = MutableLiveData<MoviesJsonResponse?>()
     val moviesInTheaters: LiveData<MoviesJsonResponse?> = _moviesInTheaters
 
-    private val _movieDetails = MutableLiveData<Movie?>()
-    val movieDetails: LiveData<Movie?> = _movieDetails
+//    private val _movieDetails = MutableLiveData<Movie?>()
+//    val movieDetails: LiveData<Movie?> = _movieDetails
 
-
-    fun getMovieGenres(){
-        viewModelScope.launch(Dispatchers.IO) {
-            _movieGenres.postValue(repository.getMovieGenres())
-        }
-    }
 
     fun getConfigurations(){
         viewModelScope.launch(Dispatchers.IO){
@@ -49,6 +42,7 @@ class SharedViewModel
         viewModelScope.launch(Dispatchers.IO) {
             val existingValue = _popularMovies.value
             val updatedValue = repository.getPopularMovies(pageNumber)
+
             if (existingValue != null && updatedValue != null) {
                 val mergedResult = existingValue.results + updatedValue.results
                 _popularMovies.postValue(MoviesJsonResponse(mergedResult, existingValue.total_pages))
@@ -73,11 +67,11 @@ class SharedViewModel
         }
     }
 
-    fun getMovieDetails(movieId: String){
-        viewModelScope.launch(Dispatchers.IO) {
-            _movieDetails.postValue(repository.getMovieDetails(movieId))
-
-        }
-    }
+//    fun getMovieDetails(movieId: String){
+//        viewModelScope.launch(Dispatchers.IO) {
+//            _movieDetails.postValue(repository.getMovieDetails(movieId))
+//
+//        }
+//    }
 
 }

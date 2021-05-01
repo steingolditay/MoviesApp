@@ -13,17 +13,9 @@ class MovieViewModel
 
 @Inject constructor(private val repository: Repository): ViewModel(){
 
+    private val _movieDetails = MutableLiveData<MovieDetails?>()
+    val movieDetails: LiveData<MovieDetails?> = _movieDetails
 
-    private val _movieGenres = MutableLiveData<List<Genre>>()
-    val movieGenres: LiveData<List<Genre>> = _movieGenres
-
-    private val _movieDetails = MutableLiveData<Movie?>()
-    val movieDetails: LiveData<Movie?> = _movieDetails
-
-
-    fun getMovieGenres(){
-            _movieGenres.postValue(repository.movieGenres.value!!)
-    }
 
     fun getMovieDetails(movieId: String){
         viewModelScope.launch(Dispatchers.IO) {

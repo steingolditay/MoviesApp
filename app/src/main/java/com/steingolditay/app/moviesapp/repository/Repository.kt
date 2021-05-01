@@ -16,23 +16,6 @@ class Repository
 
 @Inject constructor(private val retrofit: RetrofitInterface) {
 
-    private val _movieGenres = MutableLiveData<List<Genre>>()
-    val movieGenres: LiveData<List<Genre>> = _movieGenres
-
-
-    suspend fun getMovieGenres(): GenresJsonResponse? {
-        return try {
-            val result = retrofit.getMovieGenres()
-            if (result != null){
-                _movieGenres.postValue(result.genres)
-            }
-            result
-        }
-        catch (e: Exception) {
-            null
-        }
-
-    }
 
     suspend fun getConfigurations(): ConfigurationsJsonResponse? {
         return try {
@@ -44,6 +27,7 @@ class Repository
     }
 
     suspend fun getPopularMovies(pageNumber: String): MoviesJsonResponse? {
+        println(retrofit.getPopularMovies(pageNumber))
         return try {
             retrofit.getPopularMovies(pageNumber)
         }
@@ -61,7 +45,7 @@ class Repository
         }
     }
 
-    suspend fun getMovieDetails(movieId: String): Movie? {
+    suspend fun getMovieDetails(movieId: String): MovieDetails? {
         return try {
             retrofit.getMovieDetails(movieId)
         }

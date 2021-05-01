@@ -2,10 +2,10 @@ package com.steingolditay.app.moviesapp.models
 
 
 
-class Movie(
+class MovieDetails(
 
     val id: Int,
-    val genre_ids: List<Int>,
+    val genres: List<Genre>,
     val backdrop_path: String,
     val original_language: String,
     val title: String,

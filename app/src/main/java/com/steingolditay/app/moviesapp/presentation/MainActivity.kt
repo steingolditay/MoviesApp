@@ -42,33 +42,15 @@ class MainActivity: AppCompatActivity() {
 
     private fun initViewModel(){
         viewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        viewModel.movieGenres.observe(this, { result ->
-            if (result != null){
-                if (!loadedGenres){
-                    loadedGenres = true
-                    if (loadedConfiguration) {
-                        hideProgressBar()
-                        setFragment(fragmentPopular)
-                    }
-                }
-            }
 
-        })
         viewModel.configurations.observe(this, { result ->
             if (result != null){
                 Constants.imageBaseUrl = "${result.images.secure_base_url}w500"
-
-                if (!loadedConfiguration){
-                    loadedConfiguration = true
-                    if (loadedGenres){
-                        hideProgressBar()
-                        setFragment(fragmentPopular)
-                    }
-                }
+                hideProgressBar()
+                setFragment(fragmentPopular)
             }
         })
 
-        viewModel.getMovieGenres()
         viewModel.getConfigurations()
     }
 
