@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/popular"
+        android:title="@string/popular"
+        android:icon="@drawable/popular" />
+    <item android:id="@+id/inTheaters"
+        android:title="@string/inTheaters"
+        android:icon="@drawable/in_theaters" />
+    <item android:id="@+id/favorites"
+        android:title="@string/favorites"
+        android:icon="@drawable/favorite" />
+
+
+</menu>
