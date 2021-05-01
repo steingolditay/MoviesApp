@@ -2,6 +2,7 @@ package com.steingolditay.app.moviesapp.presentation.activities
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
@@ -42,6 +43,9 @@ class MovieActivity: AppCompatActivity() {
             if (result != null){
                 movie = result
                 updateUi()
+            }
+            else {
+                toastConnectionError()
             }
         })
 
@@ -104,5 +108,9 @@ class MovieActivity: AppCompatActivity() {
     private fun showProgressBar(){binding.progressBar.visibility = View.VISIBLE}
 
     private fun hideProgressBar(){binding.progressBar.visibility = View.GONE}
+
+    private fun toastConnectionError() {
+        Toast.makeText(this, getString(R.string.connectionError), Toast.LENGTH_LONG).show()
+    }
 
 }
