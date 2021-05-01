@@ -4,6 +4,8 @@ import androidx.lifecycle.*
 import com.preference.MapStructure
 import com.preference.PowerPreference
 import com.steingolditay.app.moviesapp.models.*
+import com.steingolditay.app.moviesapp.models.jsonResponses.ConfigurationsJsonResponse
+import com.steingolditay.app.moviesapp.models.jsonResponses.MoviesJsonResponse
 import com.steingolditay.app.moviesapp.repository.Repository
 import com.steingolditay.app.moviesapp.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel

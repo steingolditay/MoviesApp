@@ -1,4 +1,4 @@
-package com.steingolditay.app.moviesapp.presentation
+package com.steingolditay.app.moviesapp.presentation.activities
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.preference.PowerPreference
 import com.steingolditay.app.moviesapp.R
 import com.steingolditay.app.moviesapp.databinding.ActivityMainBinding
 import com.steingolditay.app.moviesapp.presentation.fragments.FragmentFavorites

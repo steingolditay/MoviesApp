@@ -1,4 +1,4 @@
-package com.steingolditay.app.moviesapp
+package com.steingolditay.app.moviesapp.application
 
 import android.app.Application
 import com.preference.PowerPreference
@@ -8,7 +8,7 @@ import dagger.hilt.android.HiltAndroidApp
 class Application: Application(){
     override fun onCreate() {
         super.onCreate()
-        PowerPreference.init(this);
+        PowerPreference.init(this)
 
     }
 }

@@ -1,4 +1,4 @@
-package com.steingolditay.app.moviesapp.presentation
+package com.steingolditay.app.moviesapp.presentation.activities
 
 import android.os.Bundle
 import android.view.View

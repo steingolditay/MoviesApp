@@ -13,6 +13,7 @@ import com.steingolditay.app.moviesapp.models.Movie
 import com.steingolditay.app.moviesapp.utils.Constants
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.util.*
 
 class MoviesAdapter (private val movieList: List<Movie>,
                      private val listener: OnItemClickListener)
@@ -45,7 +46,7 @@ class MoviesAdapter (private val movieList: List<Movie>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = movieList[position]
         holder.name.text = movie.title
-        holder.popularity.text = BigDecimal(movie.popularity).setScale(2, RoundingMode.HALF_DOWN).toString()
+        holder.popularity.text = String.format(BigDecimal(movie.popularity).setScale(2, RoundingMode.HALF_DOWN).toString(), Locale.getDefault())
 
         val imageUrl = Constants.imageBaseUrl + movie.backdrop_path
         Picasso.get().load(imageUrl).placeholder(R.drawable.movie).into(holder.image)

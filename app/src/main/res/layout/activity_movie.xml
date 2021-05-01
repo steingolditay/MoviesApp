@@ -18,7 +18,8 @@
             app:layout_constraintDimensionRatio="H, 16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/imageContentDescription"/>
 
         <TextView
             android:id="@+id/name"
@@ -55,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
             android:layout_marginVertical="10dp"
-            android:text="Popularity:"
+            android:text="@string/popularityTitle"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/overview" />
@@ -81,9 +82,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginHorizontal="5dp"
             android:layout_marginVertical="10dp"
-
             android:textStyle="bold"
-            android:text="Release Date:"
+            android:text="@string/releaseDateTitle"
             />
 
         <TextView
@@ -108,7 +108,7 @@
             android:layout_marginHorizontal="5dp"
             android:layout_marginVertical="10dp"
             android:textStyle="bold"
-            android:text="Language:"
+            android:text="@string/languageTitle"
             />
 
         <TextView
@@ -131,9 +131,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginHorizontal="5dp"
             android:layout_marginVertical="10dp"
-
             android:textStyle="bold"
-            android:text="Genres:"
+            android:text="@string/genresTitle"
             />
 
         <TextView
@@ -158,6 +157,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/favorite"
             android:layout_margin="20dp"
+            android:contentDescription="@string/imageContentDescription"
             />
 
 

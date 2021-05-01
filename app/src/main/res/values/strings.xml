@@ -6,5 +6,12 @@
     <string name="inTheaters">In Theaters</string>
     <string name="notConnected">Unable to fetch data. Please reconnect to the internet and try again.</string>
     <string name="connectionError">There seems to be a network problem. Please try again later.</string>
+    <string name="imageContentDescription">Image</string>
+    <string name="popularityTitle">Popularity: </string>
+    <string name="releaseDateTitle">Release Date: </string>
+    <string name="languageTitle">Language: </string>
+    <string name="genresTitle">Genres: </string>
+    <string name="seeMore">See More </string>
+
 
 </resources>

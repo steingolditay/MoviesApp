@@ -1,9 +1,9 @@
 package com.steingolditay.app.moviesapp.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.steingolditay.app.moviesapp.di.RetrofitInterface
 import com.steingolditay.app.moviesapp.models.*
+import com.steingolditay.app.moviesapp.models.jsonResponses.ConfigurationsJsonResponse
+import com.steingolditay.app.moviesapp.models.jsonResponses.MoviesJsonResponse
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent

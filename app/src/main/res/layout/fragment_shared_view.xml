@@ -35,7 +35,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="10dp"
-        android:text="See More"
+        android:text="@string/seeMore"
         android:visibility="gone"
         />
 

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.steingolditay.app.moviesapp.R
 import com.steingolditay.app.moviesapp.databinding.FragmentSharedViewBinding
 import com.steingolditay.app.moviesapp.models.Movie
-import com.steingolditay.app.moviesapp.presentation.MovieActivity
+import com.steingolditay.app.moviesapp.presentation.activities.MovieActivity
 import com.steingolditay.app.moviesapp.presentation.fragments.adapters.MoviesAdapter
 import com.steingolditay.app.moviesapp.utils.Constants
 import com.steingolditay.app.moviesapp.viewmodels.SharedViewModel

@@ -1,6 +1,8 @@
 package com.steingolditay.app.moviesapp.di
 
 import com.steingolditay.app.moviesapp.models.*
+import com.steingolditay.app.moviesapp.models.jsonResponses.ConfigurationsJsonResponse
+import com.steingolditay.app.moviesapp.models.jsonResponses.MoviesJsonResponse
 import com.steingolditay.app.moviesapp.utils.Constants
 import retrofit2.http.GET
 import retrofit2.http.Path
