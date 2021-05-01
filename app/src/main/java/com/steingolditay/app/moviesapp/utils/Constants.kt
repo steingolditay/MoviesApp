@@ -11,8 +11,7 @@ object Constants {
     const val queryInTheatersMovies = "movie/now_playing?api_key=$apiKey"
     const val queryMovieDetails = "movie/{movie_id}?api_key=$apiKey"
 
-
-
     const val movieId = "movieId"
+    const val favorites = "favorites"
 
 }

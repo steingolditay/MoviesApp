@@ -4,4 +4,7 @@
     <string name="favorites">Favorites</string>
     <string name="popular">Popular</string>
     <string name="inTheaters">In Theaters</string>
+    <string name="notConnected">Unable to fetch data. Please reconnect to the internet and try again.</string>
+    <string name="connectionError">There seems to be a network problem. Please try again later.</string>
+
 </resources>

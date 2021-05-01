@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.steingolditay.app.moviesapp.databinding.FragmentPopularBinding
+import com.steingolditay.app.moviesapp.databinding.FragmentSharedViewBinding
 import com.steingolditay.app.moviesapp.models.Movie
 import com.steingolditay.app.moviesapp.presentation.MovieActivity
 import com.steingolditay.app.moviesapp.presentation.fragments.adapters.MoviesAdapter
@@ -22,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FragmentPopular: Fragment(), MoviesAdapter.OnItemClickListener {
 
-    private var _binding: FragmentPopularBinding? = null
+    private var _binding: FragmentSharedViewBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SharedViewModel by activityViewModels()
     private lateinit var adapter: MoviesAdapter
@@ -33,15 +32,13 @@ class FragmentPopular: Fragment(), MoviesAdapter.OnItemClickListener {
 
     private var firstTime = true
 
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentPopularBinding.inflate(inflater, container, false)
+        _binding = FragmentSharedViewBinding.inflate(inflater, container, false)
         return binding.root
     }
 

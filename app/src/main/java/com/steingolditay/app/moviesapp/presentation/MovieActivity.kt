@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
 import com.steingolditay.app.moviesapp.R
 import com.steingolditay.app.moviesapp.databinding.ActivityMovieBinding
-import com.steingolditay.app.moviesapp.models.Movie
 import com.steingolditay.app.moviesapp.models.MovieDetails
 import com.steingolditay.app.moviesapp.utils.Constants
 import com.steingolditay.app.moviesapp.viewmodels.MovieViewModel
-import com.steingolditay.app.moviesapp.viewmodels.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,9 +18,9 @@ class MovieActivity: AppCompatActivity() {
     private lateinit var binding: ActivityMovieBinding
     private lateinit var viewModel: MovieViewModel
 
-    private lateinit var genresMap: Map<Int, String>
     private lateinit var movie: MovieDetails
     private lateinit var movieId: String
+    private  var isFavorite = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +45,14 @@ class MovieActivity: AppCompatActivity() {
             }
         })
 
+        viewModel.favorites.observe(this, { favorites ->
+            if (favorites != null){
+                isFavorite = favorites.containsKey(movieId)
+            }
+        })
+
         viewModel.getMovieDetails(movieId)
+        viewModel.getFavorites()
     }
 
 
@@ -66,7 +71,35 @@ class MovieActivity: AppCompatActivity() {
         binding.releaseDate.text = movie.release_date
         binding.language.text = movie.original_language
         binding.genres.text = movie.genres.joinToString { it.name }
+
+        if (isFavorite){
+            binding.favorite.setImageResource (R.drawable.favorite_filled)
+        }
+        else {
+            binding.favorite.setImageResource (R.drawable.favorite)
+        }
+
+
+        binding.favorite.setOnClickListener{
+            if (isFavorite){
+                binding.favorite.setImageResource (R.drawable.favorite)
+                removeFromFavorites()
+                isFavorite = false
+            }
+            else {
+                binding.favorite.setImageResource (R.drawable.favorite_filled)
+                addToFavorites()
+                isFavorite = true
+
+            }
+        }
     }
+
+
+
+    private fun addToFavorites(){viewModel.addFavorite(movie)}
+
+    private fun removeFromFavorites(){viewModel.removeFavorite(movie)}
 
     private fun showProgressBar(){binding.progressBar.visibility = View.VISIBLE}
 
